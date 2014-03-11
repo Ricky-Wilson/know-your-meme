@@ -1,4 +1,6 @@
 #!/usr/bin/python
+
+# Download the latest images from the know your meme feed
 from requests import get
 from bs4 import BeautifulSoup as bs
 import re
@@ -12,9 +14,9 @@ feed_url = "http://knowyourmeme.com/photos.rss"
 output   = "img/" 
 
 def saveImages(feed_url):
-  items   = bs ( get ( feed_url ).content ).find_all('item')
-  saved   = 0
-  passed  = 0
+  items     =  bs ( get ( feed_url ).content ).find_all('item')
+  saved    =  0  # Incremented each time a image is saved 
+  passed  =  0  # Incremented each time a image is passed 
   for i in items:
     name = output + i.title.text.split("|")[1].strip()
     if exists(name) == False:
@@ -24,7 +26,6 @@ def saveImages(feed_url):
     else: 
       passed += 1
   print "%d Images Saved\n%d Images passed" % (saved,passed)
-
 
 saveImages(feed_url)
 
